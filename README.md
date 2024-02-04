@@ -1,6 +1,6 @@
 # TkFreeChat
 
-[![GitHub License](https://img.shields.io/github/license/thiliapr/tkfreechat)](https://github.com/thiliapr/tkfreechat/blob/master/LICENSE)
+[![GitHub License](https://img.shields.io/badge/license-AGPLv3%2B-blue)](https://github.com/thiliapr/tkfreechat/blob/master/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/thiliapr/tkfreechat)](https://github.com/thiliapr/tkfreechat/stargazers)
 
 Languages: [English](./README.md) | [简体中文](./README.zh-cn.md)
