@@ -1,0 +1,64 @@
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.author {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.time {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.text {
+    font-size: 14px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.promptLabel {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Adjust styling for select input */
+select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}

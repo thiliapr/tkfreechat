@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>TkFreeChat</title>
+    <link rel="stylesheet" href="css/mobileTalk.css">
+</head>
+
+<body>
+    <div id="chat-container">
+        <div class="message">
+            <div class="author">Bot</div>
+            <div class="time">1949/10/1 08:00:00</div>
+            <div class="text">Waiting...</div>
+        </div>
+    </div>
+    <div>
+        <label for="input-type" class="promptLabel">Type</label>
+        <select name="input-type" id="input-type">
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="file">File</option>
+        </select>
+        <input type="text" id="user-input" name="user-input" class="input" placeholder="Please type text" />
+        <button onclick="javascript:sendMessage();">Send</button>
+    </div>
+    <div>
+        <label for="username" class="promptLabel">Username</label>
+        <input id="username" class="input" placeholder="Your name" />
+    </div>
+    <script type="module">
+        import {refreshChat, sendMessage} from "./js/chat.js";
+
+        window.sendMessage = sendMessage;
+
+        const inputTypeSelect = document.getElementById("input-type");
+        const userInput = document.getElementById("user-input");
+
+        inputTypeSelect.addEventListener("change", function() {
+            const selectedOption = inputTypeSelect.value;
+            if (selectedOption === "text") {
+                userInput.type = "text";
+                userInput.placeholder = "Please type text";
+            } else if (selectedOption === "image") {
+                userInput.type = "file";
+                userInput.accept = "image/*"; // Accept only pictures
+            } else if (selectedOption === "file") {
+                userInput.type = "file";
+                userInput.accept = "*";
+            }
+        });
+
+        document.getElementById("user-input").addEventListener('keydown', function(event) {
+            if (event.keyCode === 13 && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        refreshChat();
+    </script>
+</body>
+
+</html>
