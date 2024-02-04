@@ -3,7 +3,7 @@
 [![GitHub License](https://img.shields.io/github/license/thiliapr/tkfreechat)](https://github.com/thiliapr/tkfreechat/blob/master/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/thiliapr/tkfreechat)](https://github.com/thiliapr/tkfreechat/stargazers)
 
-Languages: [English](./readme.md) | [简体中文](./readme.zh-cn.md)
+Languages: [English](./README.md) | [简体中文](./README.zh-cn.md)
 
 ## Introduction
 
