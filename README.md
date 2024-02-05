@@ -16,9 +16,8 @@ Languages: [English](./README.md) | [简体中文](./README.zh-cn.md)
 
 ## Drawbacks
 
-1. Each message requires re-downloading the last 15 chat messages, which can strain the server (implemented in `chat.js`).
-2. Lack of user authentication; anyone can use any username (due to the complexity of public-private key pairs for regular users).
-3. The interface is not optimized for PC usage (CSS expertise needed for better PC compatibility).
+1. Lack of user authentication; anyone can use any username (due to the complexity of public-private key pairs for regular users).
+2. The interface is not optimized for PC usage (CSS expertise needed for better PC compatibility).
 
 ## Recommendations
 
