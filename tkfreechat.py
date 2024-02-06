@@ -5,8 +5,8 @@ import http.server
 import json
 import os.path
 import shutil
-import time
 import threading
+import time
 from typing import Any
 
 # Constants
@@ -15,6 +15,7 @@ messages_index_path = f"{data_dir}/index.json"
 messages_path = f"{data_dir}/messages.json"
 ext2type = {"js": "text/javascript", "html": "text/html", "css": "text/css"}
 timeout_ms = 4 * 60 * 1000
+
 
 def check_args(handler: http.server.BaseHTTPRequestHandler, args: tuple, target: dict) -> bool:
     err_info = "Missing parameter\nParameter: %s\nType: %s"
@@ -165,25 +166,25 @@ class TkFreeTalkRequestHandler(http.server.BaseHTTPRequestHandler):
             # Check arguments
             if not check_args(self, (("hash", str), ("content", str), ("eof", bool)), request_json):
                 return
-        
+
             # Read messages index
             with open(messages_index_path, mode="r", encoding="utf-8") as f:
                 msg_index = json.load(f)
-        
+
             # Check if the message is in index
             if request_json["hash"] not in msg_index:
                 self.send_response(404)
                 self.end_headers()
                 self.wfile.write(b"{\"err\": \"Message is not in index.\"}")
                 return
-        
+
             # Check if the message is EOF
             if "uploading" not in msg_index[request_json["hash"]]:
                 self.send_response(400)
                 self.end_headers()
                 self.wfile.write(b"{\"err\": \"Message is closed.\"}")
                 return
-        
+
             with open(f"{data_dir}/{request_json['hash']}", mode="ab") as f:
                 # Append to content
                 f.write(base64.b64decode(request_json["content"]))
@@ -193,12 +194,12 @@ class TkFreeTalkRequestHandler(http.server.BaseHTTPRequestHandler):
                 # Verify hash
                 with open(f"{data_dir}/{request_json['hash']}", mode="rb") as f:
                     file_hash = hashlib.sha256(f.read()).hexdigest()
-    
+
                 if file_hash != request_json["hash"]:
                     # Clean
                     del msg_index[request_json["hash"]]
                     os.remove(f"{data_dir}/{request_json['hash']}")
-    
+
                     # Send response
                     self.send_response(400)
                     self.end_headers()
@@ -206,16 +207,15 @@ class TkFreeTalkRequestHandler(http.server.BaseHTTPRequestHandler):
                     return
                 else:
                     del msg_index[request_json["hash"]]["uploading"]
-    
+
                 # Write to msg index
                 with open(messages_index_path, mode="w", encoding="utf-8") as f:
                     json.dump(msg_index, f)
-    
+
             # Send response
             self.send_response(201)
             self.end_headers()
             self.wfile.write(b"{}")
-
 
 
 def check_messages(interval: int):
@@ -228,16 +228,24 @@ def check_messages(interval: int):
             msg_index = json.load(f)
         with open(messages_path, mode="r", encoding="utf-8") as f:
             messages = json.load(f)
-    
+
         # Filter messages that have timed out
         msg_index = [msg for msg in msg_index if (time.time() - msg["timestamp"]) < timeout_ms]
         messages = [msg for msg in messages if messages in msg_index]
-    
+
+        # Filter messages content that not in index
+        for msg in os.listdir(data_dir):
+            if msg == messages_index_path or msg == messages_path:
+                continue
+
+            if msg not in msg_index:
+                os.remove(f"{data_dir}/{msg}")
+
         # Write the filtered messages back to the file system
         with open(messages_index_path, mode="w", encoding="utf-8") as f:
             json.dump(msg_index, f)
         with open(messages_path, mode="w", encoding="utf-8") as f:
-            json.load(messages, f)
+            json.dump(messages, f)
 
 
 def main():
@@ -260,7 +268,7 @@ def main():
         help="Use the old data (if exists)."
     )
     parser.add_argument(
-        "-i", "--check-interval", default=60*1000, type=int, dest="check_interval",
+        "-i", "--check-interval", default=60 * 1000, type=int, dest="check_interval",
         help="Check the interval for message timeout."
     )
 
