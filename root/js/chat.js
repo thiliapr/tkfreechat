@@ -11,7 +11,7 @@ var sha256 = function sha256(ascii) {
   var maxWord = mathPow(2, 32);
   var lengthProperty = "length";
   var i, j; // Used as a counter across the whole file
-  var result = '';
+  var result = "";
 
   var words = [];
   var asciiBitLength = ascii[lengthProperty] * 8;
@@ -183,8 +183,8 @@ export async function sendMessage() {
 
   // Show status
   document.getElementById("status").style.display = "";
-  document.getElementById('status-text').innerText = "";
-  document.getElementById('status-progress').removeAttribute("value");
+  document.getElementById("status-text").innerText = "";
+  document.getElementById("status-progress").removeAttribute("value");
 
   // Disable send button
   var sendButton = document.getElementById("send-button");
@@ -263,7 +263,7 @@ export async function sendMessage() {
   message = null;
   do {
     document.getElementById("status-text").innerText = "Status: Pushing content to server... (" + seek + "/" + base64Content.length + ")";
-    document.getElementById('status-progress').value = seek;
+    document.getElementById("status-progress").value = seek;
 
     let pushBody = {
       eof: false,
